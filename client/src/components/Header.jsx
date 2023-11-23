@@ -4,7 +4,10 @@ import { CiSearch } from "react-icons/ci";
 
 import { Link } from "react-router-dom";
 
+import { useSelector } from "react-redux";
+
 const Header = () => {
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <header className="bg-slate-200 shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3 gap-2">
@@ -23,7 +26,7 @@ const Header = () => {
           />
           <CiSearch size={25} className="text-slate-600" />
         </form>
-        <ul className="flex flex-row gap-4">
+        <ul className="flex flex-row gap-4 items-center">
           <Link to="/">
             <li className="hidden sm:inline text-slate-700 hover:underline hover:cursor-pointer">
               Home
@@ -34,10 +37,18 @@ const Header = () => {
               About
             </li>
           </Link>
-          <Link to="/sign-in">
-            <li className=" text-slate-700 hover:underline hover:cursor-pointer">
-              Sign In
-            </li>
+          <Link to="/profile">
+            {currentUser ? (
+              <img
+                className="rounded-full h-10 w-10 object-cover"
+                src={currentUser.avatar}
+                alt="Avatar"
+              />
+            ) : (
+              <li className=" text-slate-700 hover:underline hover:cursor-pointer">
+                Sign In
+              </li>
+            )}
           </Link>
         </ul>
       </div>
